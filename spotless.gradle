@@ -1,0 +1,10 @@
+apply plugin: "com.diffplug.gradle.spotless"
+
+spotless {
+    kotlin {
+        target project.fileTree(project.rootDir) {
+            include '**/*.kt'
+        }
+        ktlint(ktlintVersion).userData(['max_line_length' : '150'])
+    }
+}

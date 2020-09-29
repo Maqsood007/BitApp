@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply from: '../dependencies.gradle'
+apply from: "$project.rootDir/spotless.gradle"
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.0"
+
+    defaultConfig {
+        applicationId "com.bitfinex.bitapp"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "String", "BASE_URL", "\"https://api-pub.bitfinex.com/v2/\""
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            buildConfigField "String", "BASE_URL", "\"https://api-pub.bitfinex.com/v2/\""
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation kotlin_dep.stdlib
+
+    // core + design libraries
+    implementation design.androidx_core
+    implementation design.appcomapt
+    implementation design.material_design
+    implementation design.constraint_layout
+
+    // Android Navigation
+    implementation nav_fragments.navigation_fragment
+    implementation nav_fragments.navigation_ui
+    implementation nav_fragments.navigation_fragment_ext
+    implementation nav_fragments.navigation_ui_ext
+    implementation nav_fragments.fragment_ktx
+
+
+    // lifecycle + liveData + viewModel
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    // Hilt dependency Injection
+    implementation hilt_di.hilt
+    kapt hilt_di.hilt_kapt
+
+    //ViewModel Injection with Hilt
+    implementation hilt_di.hilt_viewmodel
+    kapt hilt_di.hilt_viewmodel_kapt
+
+
+    //Network libraries
+    implementation network.retrofit
+    implementation network.retrofit_gson_convertor
+    implementation network.retrofit_loggin_interceptor
+    implementation network.gson
+
+    //Room database
+    implementation database.room_runtime
+    kapt database.room_compiler
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation database.room_ktx
+
+    //Encrypted Shared preference
+    implementation security.encrypted_preference
+
+    //Coroutines
+    implementation background.coroutines
+
+    //Testing
+    testImplementation testing.junit
+    androidTestImplementation testing.junit_android_ext
+    androidTestImplementation testing.espresso_core
+
+}
