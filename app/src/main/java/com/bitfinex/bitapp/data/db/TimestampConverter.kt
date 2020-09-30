@@ -10,8 +10,6 @@ import java.util.*
  */
 class TimestampConverter {
 
-
-
     @TypeConverter
     fun fromTimestamp(value: String?): Date? {
         return if (value != null) {
@@ -27,7 +25,6 @@ class TimestampConverter {
             null
         }
     }
-
 
     @TypeConverter
     fun dateToTimestamp(value: Date?): String? {

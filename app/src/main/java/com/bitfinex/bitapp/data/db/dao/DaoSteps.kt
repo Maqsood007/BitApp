@@ -13,8 +13,8 @@ import com.bitfinex.bitapp.data.db.tables.Steps
 interface DaoSteps {
 
     @Insert
-    fun insertSteps(steps: Steps) : Long
+    fun insertSteps(steps: Steps): Long
 
     @Query("SELECT * FROM Steps")
-    suspend fun getSteps() : List<Steps>
+    suspend fun getSteps(): List<Steps>
 }

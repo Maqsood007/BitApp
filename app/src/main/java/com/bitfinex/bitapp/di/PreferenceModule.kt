@@ -34,5 +34,4 @@ object PreferenceModule {
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )
     }
-
 }

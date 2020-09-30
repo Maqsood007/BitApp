@@ -7,19 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.bitfinex.bitapp.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:name="com.bitfinex.bitapp.ui.tradingPair.HomeFragment"
+        android:label="@string/title_trading_pair"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.bitfinex.bitapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.bitfinex.bitapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_fundingItem"
+        android:name="com.bitfinex.bitapp.ui.funding.FundingItemFragment"
+        android:label="@string/title_funding_item"
+        tools:layout="@layout/fragment_funding_item" />
 </navigation>

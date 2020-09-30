@@ -9,5 +9,4 @@ import java.util.*
 object DateTimeUtils {
 
     val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-
 }

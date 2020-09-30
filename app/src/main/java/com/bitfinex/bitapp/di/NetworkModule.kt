@@ -33,13 +33,11 @@ object NetworkModule {
                 newUrl = request.url.newBuilder()
                     .build()
 
-
                 it.proceed(
                     request.newBuilder()
                         .url(newUrl)
                         .build()
                 )
-
             }
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(1, TimeUnit.MINUTES)
