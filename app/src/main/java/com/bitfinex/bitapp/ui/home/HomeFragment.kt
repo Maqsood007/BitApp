@@ -1,11 +1,13 @@
 package com.bitfinex.bitapp.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,7 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel by viewModels<HomeViewModel>()
+
+    companion object {
+
+        val TAG = HomeFragment::class.simpleName
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,5 +40,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         homeViewModel.getPlatformStatus()
+        Log.d(TAG,"homeViewModel is: $homeViewModel")
+
+        homeViewModel.count.observe(viewLifecycleOwner){
+
+            Log.d(TAG,"homeViewModel Count is : $it")
+        }
     }
 }

@@ -1,0 +1,4 @@
+task testAll(dependsOn: ['test', 'connectedAndroidTest']) {
+    group = 'bitapp_tests'
+    description = "Run all tests"
+}
