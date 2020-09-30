@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply from: '../dependencies.gradle'
 apply from: "$project.rootDir/spotless.gradle"
+apply from: "$project.rootDir/BitappTestsRunner.gradle"
 
 android {
     compileSdkVersion 30
