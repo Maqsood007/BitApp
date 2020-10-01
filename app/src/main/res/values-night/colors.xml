@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <color name="white">#F0F0F0</color>
-
     <color name="errorColor">#FF0041</color>
     <color name="transparent">#00000000</color>
 
-    <color name="surfaceBgColor">#FFFF</color>
 
-    <color name="TextViewColor">#39454B</color>
+    <color name="surfaceBgColor">#121212</color>
+
+    <color name="TextViewColor">@color/white</color>
 
     <color name="btn_text_color">#F0F0F0</color>
     <color name="btn_background">#FF0041</color>
