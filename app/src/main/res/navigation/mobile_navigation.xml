@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_trading">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.bitfinex.bitapp.ui.tradingPair.HomeFragment"
+        android:id="@+id/navigation_trading"
+        android:name="com.bitfinex.bitapp.ui.tradingPair.TradingFragment"
         android:label="@string/title_trading_pair"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_trading" />
 
     <fragment
         android:id="@+id/navigation_fundingItem"
