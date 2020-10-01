@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">BitApp</string>
+    <string name="title_trading_pair">Trading Pair</string>
+    <string name="title_funding_item">Funding Item</string>
+    <string name="loading_data">Loading Data....</string>
+    <string name="error">Error</string>
     <string name="generic_error">We have received an error. Please try again.</string>
-    <string name="retry"><u>Retry</u></string>
+    <string name="retry"><u>RETRY</u></string>
 </resources>
