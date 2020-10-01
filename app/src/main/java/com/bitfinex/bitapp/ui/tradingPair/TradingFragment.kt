@@ -1,4 +1,4 @@
-package com.bitfinex.bitapp.ui.funding
+package com.bitfinex.bitapp.ui.tradingPair
 
 import android.os.Bundle
 import android.util.Log
@@ -9,30 +9,36 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bitfinex.bitapp.R
 import com.bitfinex.bitapp.ui.HomeSharedViewModel
-import com.bitfinex.bitapp.ui.tradingPair.TradingFragment
 import com.bitfinex.bitapp.utils.NetworkState
+import dagger.hilt.android.AndroidEntryPoint
 
-class FundingItemFragment : Fragment(), FundingItemView {
+@AndroidEntryPoint
+class TradingFragment : Fragment(), TradingPairView {
 
     private val homeViewModel by activityViewModels<HomeSharedViewModel>()
+
+    companion object {
+
+        val TAG = TradingFragment::class.simpleName
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_funding_item, container, false)
+        return inflater.inflate(R.layout.fragment_trading, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addStateObserver()
         retryStateObserver()
-        Log.d(TradingFragment.TAG, homeViewModel.toString())
+        Log.d(TAG, homeViewModel.toString())
     }
 
     private fun addStateObserver() {
 
-        homeViewModel.getFundingItems().observe(viewLifecycleOwner) {
+        homeViewModel.getTradingPairs().observe(viewLifecycleOwner) {
 
             when (it) {
                 is NetworkState.Success -> {
