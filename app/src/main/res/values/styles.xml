@@ -1,10 +1,41 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+
+    <style name="Theme.BitApp.App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@android:color/holo_green_dark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorError">@color/errorColor</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="colorSurface">@color/surfaceBgColor</item>
+        <item name="android:textViewStyle">@style/Widget.BitApp.TextView</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
+        <item name="materialButtonStyle">@style/Widget.BitApp.Button</item>
+        <item name="textAppearanceButton">@style/Widget.BitApp.Button.TextAppearance</item>
+    </style>
+
+
+    <!--BitApp TextView default styles-->
+
+    <style name="Widget.BitApp.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="fontFamily">@font/opensans_light</item>
+        <item name="android:textColor">@color/TextViewColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <!--AirArabia BitApp default styles-->
+    <style name="Widget.BitApp.Button" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/btn_text_color</item>
+        <item name="backgroundTint">@color/btn_background</item>
+        <item name="android:layout_height">@dimen/button_default_height</item>
+        <item name="fontFamily">@font/opensans_light</item>
+    </style>
+
+
+    <style name="Widget.BitApp.Button.TextAppearance" parent="TextAppearance.MaterialComponents.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
 </resources>
