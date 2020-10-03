@@ -23,6 +23,12 @@
     <fragment
         android:id="@+id/pairLiveTickerTradeFragment"
         android:name="com.bitfinex.bitapp.ui.tradingPair.PairLiveTickerTradeFragment"
-        android:label="fragment_pair_live_ticker_trade"
-        tools:layout="@layout/fragment_pair_live_ticker_trade" />
+        android:label="{trading_pair}"
+        tools:layout="@layout/fragment_pair_live_ticker_trade" >
+        <argument
+            android:name="trading_pair"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="Trading Pair" />
+    </fragment>
 </navigation>

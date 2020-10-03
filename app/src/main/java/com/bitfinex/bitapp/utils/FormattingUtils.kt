@@ -7,11 +7,9 @@ import android.text.TextUtils
  */
 object FormattingUtils {
 
-
     fun prepareTradingItemForApp(tradingPairs: List<String>) = tradingPairs.map {
         getFormattedTradingPair(it)
     }
-
 
     private fun getFormattedTradingPair(tradingPair: String) = if (tradingPair.contains(":")) {
         tradingPair.replace(":", "/")
@@ -20,9 +18,8 @@ object FormattingUtils {
             TextUtils.substring(
                 tradingPair,
                 (tradingPair.length / 2),
-                (tradingPair.length - 1)
+                (tradingPair.length)
             )
         }"
     }
-
 }

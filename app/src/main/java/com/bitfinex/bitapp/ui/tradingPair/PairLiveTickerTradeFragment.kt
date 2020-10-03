@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bitfinex.bitapp.R
 import com.bitfinex.bitapp.data.models.TradingPairTicker
 import com.bitfinex.bitapp.data.models.TradingPairTrade
@@ -21,22 +22,23 @@ import kotlinx.android.synthetic.main.fragment_trading.*
  */
 class PairLiveTickerTradeFragment : Fragment() {
 
-
     private val pairLiveTickerTradeViewModel by viewModels<PairLiveTickerTradeViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pair_live_ticker_trade, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         setupTickerRVAdapter()
         setupTradingRVAdapter()
+
+        getTradingPairFromArgument()
 
         pairLiveTickerTradeViewModel.startListeningPairLiveTicker()
         pairLiveTickerTradeViewModel.tradingPairTicker.observe(viewLifecycleOwner) { tickers ->
@@ -46,9 +48,14 @@ class PairLiveTickerTradeFragment : Fragment() {
         pairLiveTickerTradeViewModel.tradingPairTrade.observe(viewLifecycleOwner) { trades ->
             updateTradingData(trades)
         }
-
     }
 
+    private fun getTradingPairFromArgument() {
+        arguments?.getString(TradingPairsListAdapter.TRADING_PAIR).also {
+            pairLiveTickerTradeViewModel.tradingPair =
+                arguments?.getString(TradingPairsListAdapter.TRADING_PAIR)
+        } ?: findNavController().popBackStack()
+    }
 
     private fun setupTickerRVAdapter() {
         rv_PairTicker.apply {
@@ -65,7 +72,6 @@ class PairLiveTickerTradeFragment : Fragment() {
         }
     }
 
-
     private fun setupTradingRVAdapter() {
         rv_PairTrade.apply {
             adapter = TradingPairTradesAdapter()
@@ -80,5 +86,4 @@ class PairLiveTickerTradeFragment : Fragment() {
             rv_PairTrade.scrollToPosition(0)
         }
     }
-
 }

@@ -29,18 +29,15 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-
         if (NetworkUtils.isNetworkAvailable(this)) {
             setupSplashObserver()
         } else {
             homeViewModel.splashStatusMessage.value = getString(R.string.no_internet_msg)
             homeViewModel.splashLoadingVisibility.value = false
         }
-
     }
 
     private fun setupSplashObserver() {
-
 
         homeViewModel.getPlatformStatus().observe(this) {
 
@@ -66,7 +63,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun hideSplash() {
         homeViewModel.splashVisibility.value = false

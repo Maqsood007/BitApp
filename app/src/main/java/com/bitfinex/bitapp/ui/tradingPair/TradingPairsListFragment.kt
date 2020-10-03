@@ -39,7 +39,6 @@ class TradingPairsListFragment : Fragment(), TradingPairView {
         Log.d(TAG, homeViewModel.toString())
     }
 
-
     private fun addSplashObserver() {
 
         homeViewModel.splashVisibility.observe(viewLifecycleOwner) { visibility ->
@@ -85,7 +84,6 @@ class TradingPairsListFragment : Fragment(), TradingPairView {
             addTradingPair(tradingPairs)
             notifyDataSetChanged()
         }
-
     }
 
     private fun retryStateObserver() {

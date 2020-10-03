@@ -1,14 +1,18 @@
 package com.bitfinex.bitapp.utils
 
+import junit.framework.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
 /**
- * Created by Muhammad Maqsood on 02/10/2020.
+ * Created by Muhammad Maqsood on 03/10/2020.
  */
+@RunWith(
+    JUnit4::class
+)
 class DataParsingUtilsTest {
 
     @Before
@@ -36,7 +40,6 @@ class DataParsingUtilsTest {
                 DataParsingUtils.TradingPairIndex.FIRST
             )
         )
-
     }
 
     @Test
@@ -52,6 +55,5 @@ class DataParsingUtilsTest {
                 DataParsingUtils.TradingPairIndex.SECOND
             )
         )
-
     }
 }

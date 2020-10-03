@@ -22,7 +22,8 @@ ext {
             junit                  : "4.12",
             junit_ext              : "1.1.2",
             espresso_core          : "3.3.0",
-            room_version           : "2.2.5"
+            room_version           : "2.2.5",
+            mockito           : "1.10.19"
     ]
 
     kotlin_dep = [
@@ -87,6 +88,7 @@ ext {
     testing = [
             junit            : "junit:junit:${versions.junit}",
             junit_android_ext: "androidx.test.ext:junit:${versions.junit_ext}",
-            espresso_core    : "androidx.test.espresso:espresso-core:${versions.espresso_core}"
+            espresso_core    : "androidx.test.espresso:espresso-core:${versions.espresso_core}",
+            mockito          : "org.mockito:mockito-core:${versions.mockito}"
     ]
 }

@@ -1,6 +1,6 @@
 package com.bitfinex.bitapp.ui.tradingPair.adapter
 
-
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -16,6 +16,10 @@ import com.bitfinex.bitapp.ui.tradingPair.viewmodel.TradingPairListItemViewModel
 class TradingPairsListAdapter(private val tradingPairs: MutableList<String> = mutableListOf()) :
     RecyclerView.Adapter<TradingPairsListAdapter.TradingPairItemViewHolder>() {
 
+    companion object {
+
+        const val TRADING_PAIR = "trading_pair"
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TradingPairItemViewHolder {
         val listItemBrandingPairBinding = DataBindingUtil.inflate<ListItemTrandingPairBinding>(
@@ -32,7 +36,6 @@ class TradingPairsListAdapter(private val tradingPairs: MutableList<String> = mu
 
         val tradingPair = tradingPairs[holder.adapterPosition]
         holder.bind(tradingPair)
-
     }
 
     override fun getItemCount(): Int = tradingPairs.size
@@ -45,10 +48,8 @@ class TradingPairsListAdapter(private val tradingPairs: MutableList<String> = mu
         this.tradingPairs.addAll(products)
     }
 
-
     class TradingPairItemViewHolder(private val listItemBrandingPairBinding: ListItemTrandingPairBinding) :
         RecyclerView.ViewHolder(listItemBrandingPairBinding.root) {
-
 
         private val tradingPairViewModel = TradingPairListItemViewModel()
 
@@ -57,12 +58,14 @@ class TradingPairsListAdapter(private val tradingPairs: MutableList<String> = mu
             tradingPairViewModel.bind(tradingPair)
 
             listItemBrandingPairBinding.root.setOnClickListener {
+
                 it.findNavController()
-                    .navigate(R.id.action_navigation_trading_to_pairLiveTickerTradeFragment)
+                    .navigate(
+                        R.id.action_navigation_trading_to_pairLiveTickerTradeFragment,
+                        Bundle().apply {
+                            putString(TRADING_PAIR, tradingPair)
+                        })
             }
         }
-
     }
-
-
 }

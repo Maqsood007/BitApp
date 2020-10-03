@@ -9,6 +9,7 @@ import com.bitfinex.bitapp.data.models.TradingPairTrade
 import com.bitfinex.bitapp.utils.DataParsingUtils
 import com.bitfinex.bitapp.utils.DataParsingUtils.checkIfValidData
 import com.bitfinex.bitapp.utils.DataParsingUtils.extractReceivedDataChannelID
+import com.bitfinex.bitapp.utils.DataParsingUtils.getTradingPairSymbol
 import com.bitfinex.bitapp.utils.DataParsingUtils.getTradingPairTickerItem
 import com.bitfinex.bitapp.utils.DataParsingUtils.getTradingPairTradeItem
 import com.bitfinex.bitapp.utils.DataParsingUtils.isTickerChannel
@@ -22,21 +23,21 @@ import okhttp3.*
  */
 class PairLiveTickerTradeViewModel @ViewModelInject constructor() : ViewModel() {
 
-
-    val tradingPair = MutableLiveData<String>("tBTCUSD")
+    var tradingPair: String? = null
 
     var tickerStreamChannelID: Long = 0
     var tradeStreamChannelID: Long = 0
 
     val tradingPairTicker = MutableLiveData<TradingPairTicker>()
-    val tradingPairTrade= MutableLiveData<List<TradingPairTrade>>()
+    val tradingPairTrade = MutableLiveData<List<TradingPairTrade>>()
 
+    lateinit var webSocket: WebSocket
 
     fun startListeningPairLiveTicker() {
 
         val request = Request.Builder().url("wss://api-pub.bitfinex.com/ws/2").build()
 
-        val webSocket = OkHttpClient().newWebSocket(request, object : WebSocketListener() {
+        webSocket = OkHttpClient().newWebSocket(request, object : WebSocketListener() {
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                 println("onFailure")
@@ -58,13 +59,10 @@ class PairLiveTickerTradeViewModel @ViewModelInject constructor() : ViewModel() 
                                 updatePairTrade(text)
                             }
                         }
-
                     }
-
-
                 }
 
-                //update(text)
+                // update(text)
                 println("onMessage: $text")
             }
 
@@ -73,12 +71,17 @@ class PairLiveTickerTradeViewModel @ViewModelInject constructor() : ViewModel() 
             }
         })
 
-
-        webSocket.send("{ \"event\": \"subscribe\", \"channel\": \"ticker\", \"symbol\": \"tBTCUSD\"}")
-        webSocket.send("{ \"event\": \"subscribe\", \"channel\": \"trades\", \"symbol\": \"tBTCUSD\"}")
-
+        webSocket.send(
+            "{ \"event\": \"subscribe\", \"channel\": \"ticker\", \"symbol\": \"${
+                getTradingPairSymbol(tradingPair!!)
+            }\"}"
+        )
+        webSocket.send(
+            "{ \"event\": \"subscribe\", \"channel\": \"trades\", \"symbol\": \"${
+                getTradingPairSymbol(tradingPair!!)
+            }\"}"
+        )
     }
-
 
     private fun assignChannelsID(data: String) {
 
@@ -89,29 +92,31 @@ class PairLiveTickerTradeViewModel @ViewModelInject constructor() : ViewModel() 
         } else {
             tradeStreamChannelID = channel.chanId!!
         }
-
     }
-
 
     private fun updatePairTicker(text: String) {
 
-        getTradingPairTickerItem(text, tradingPair.value!!)?.let {tradingPairTickerItem ->
+        getTradingPairTickerItem(text, tradingPair!!)?.let { tradingPairTickerItem ->
 
             viewModelScope.launch(Dispatchers.Main) {
                 tradingPairTicker.value = tradingPairTickerItem
             }
         }
-
     }
 
     private fun updatePairTrade(text: String) {
 
-        getTradingPairTradeItem(text)?.let {tradingPairTradeItem ->
+        getTradingPairTradeItem(text)?.let { tradingPairTradeItem ->
             viewModelScope.launch(Dispatchers.Main) {
                 tradingPairTrade.value = tradingPairTradeItem
             }
         }
     }
 
-
+    override fun onCleared() {
+        super.onCleared()
+        if (this::webSocket.isInitialized) {
+            webSocket.close(1000, "Its Cleared")
+        }
+    }
 }

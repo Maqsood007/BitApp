@@ -103,5 +103,6 @@ dependencies {
     testImplementation testing.junit
     androidTestImplementation testing.junit_android_ext
     androidTestImplementation testing.espresso_core
+    testImplementation testing.mockito
 
 }

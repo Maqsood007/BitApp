@@ -2,15 +2,12 @@ package com.bitfinex.bitapp.ui.funding
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.scopes.FragmentScoped
 import okhttp3.*
 import okio.ByteString
 
-
 class FundingItemViewModel @ViewModelInject constructor() : ViewModel() {
 
-
-    fun startListeningPairLiveTicker(){
+    fun startListeningPairLiveTicker() {
 
         val request = Request.Builder().url("wss://api-pub.bitfinex.com/ws/2").build()
 
@@ -34,8 +31,5 @@ class FundingItemViewModel @ViewModelInject constructor() : ViewModel() {
         })
 
         webSocket.send("{ \"event\": \"subscribe\", \"channel\": \"ticker\", \"symbol\": \"tBTCUSD\"}")
-
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.bitfinex.bitapp.ui.tradingPair.adapter
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -15,7 +14,6 @@ import com.bitfinex.bitapp.ui.tradingPair.viewmodel.TradingPairListItemTradeView
  */
 class TradingPairTradesAdapter(private val tradingPairTrades: MutableList<TradingPairTrade> = mutableListOf()) :
     RecyclerView.Adapter<TradingPairTradesAdapter.TradingPairTradeItemViewHolder>() {
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -35,7 +33,6 @@ class TradingPairTradesAdapter(private val tradingPairTrades: MutableList<Tradin
 
         val tradingPair = tradingPairTrades[holderTrade.adapterPosition]
         holderTrade.bind(tradingPair)
-
     }
 
     override fun getItemCount(): Int = tradingPairTrades.size
@@ -49,27 +46,17 @@ class TradingPairTradesAdapter(private val tradingPairTrades: MutableList<Tradin
     }
 
     fun addTradingPairTrades(tradingPairTrades: List<TradingPairTrade>) {
-        this.tradingPairTrades.addAll(tradingPairTrades)
+        this.tradingPairTrades.addAll(0, tradingPairTrades)
     }
-
 
     class TradingPairTradeItemViewHolder(private val listItemTradingPairTradeBinding: ListItemTrandingPairTradeBinding) :
         RecyclerView.ViewHolder(listItemTradingPairTradeBinding.root) {
-
 
         private val tradingPairViewModel = TradingPairListItemTradeViewModel()
 
         fun bind(tradingPairTrade: TradingPairTrade) {
             listItemTradingPairTradeBinding.viewModel = tradingPairViewModel
             tradingPairViewModel.bind(tradingPairTrade)
-
-            listItemTradingPairTradeBinding.root.setOnClickListener {
-//                it.findNavController()
-//                    .navigate(0)
-            }
         }
-
     }
-
-
 }

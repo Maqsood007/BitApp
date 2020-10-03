@@ -6,18 +6,15 @@ import com.bitfinex.bitapp.data.models.TradingPairTrade
 import com.bitfinex.bitapp.data.models.WSSubscriptionResponse
 import com.google.gson.Gson
 import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import java.lang.Exception
 import java.lang.reflect.Type
 import java.math.BigDecimal
-import java.math.BigInteger
 
 /**
  * Created by Muhammad Maqsood on 01/10/2020.
  */
 object DataParsingUtils {
-
 
     enum class TradingPairIndex {
         FIRST,
@@ -34,7 +31,6 @@ object DataParsingUtils {
         TRADING_EXECUTION,
         TRADING_UPDATE
     }
-
 
     fun isPlatformIsUp(data: List<String?>?) = data?.get(0)?.let {
         return it == "1"
@@ -53,21 +49,17 @@ object DataParsingUtils {
                 } else {
                     substring(tradingPair, 0, (tradingPair.length / 2))
                 }
-
-
             }
             TradingPairIndex.SECOND -> {
 
                 return if (tradingPair.contains(":")) {
                     tradingPair.split(":")[1]
                 } else {
-                    substring(tradingPair, tradingPair.length / 2, tradingPair.length - 1)
+                    substring(tradingPair, tradingPair.length / 2, tradingPair.length)
                 }
-
             }
         }
     }
-
 
     // Differentiate between channel (ticker or trades)
     fun isTickerChannel(wsSubscriptionResponse: WSSubscriptionResponse) =
@@ -79,7 +71,6 @@ object DataParsingUtils {
         return Gson().fromJson(data, type)
     }
 
-
     fun extractReceivedDataChannelID(
         data: String,
         tickerChannelID: Long
@@ -88,7 +79,7 @@ object DataParsingUtils {
         val type: Type = object : TypeToken<JsonArray>() {}.type
         val response = Gson().fromJson<JsonArray>(data, type)
 
-        //channelID (always)
+        // channelID (always)
         val channelIDElement = response.get(0)
         val typeString: Type = object : TypeToken<Long>() {}.type
         return if (Gson().fromJson<Long>(
@@ -96,15 +87,13 @@ object DataParsingUtils {
                 typeString
             ) == tickerChannelID
         ) return ChannelType.TICKER else ChannelType.TRADES
-
     }
-
 
     fun checkIfValidData(data: String) = (!data.contains("hb") && !data.contains("event"))
 
     fun getTradingPairTickerItem(data: String, pairName: String): TradingPairTicker? {
 
-        //If there is no activity in the channel for 15 seconds,
+        // If there is no activity in the channel for 15 seconds,
         // the WebSocket server will send you a heartbeat message in this format.
         try {
 
@@ -123,9 +112,7 @@ object DataParsingUtils {
                     dataList[5],
                     dataList[8]
                 )
-
             }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -133,8 +120,7 @@ object DataParsingUtils {
         return null
     }
 
-
-    fun getPairTradeType(data: String) = when {
+    private fun getPairTradeType(data: String) = when {
         data.contains("tu") -> PairTradeType.TRADING_UPDATE
         data.contains("te") -> PairTradeType.TRADING_EXECUTION
         else -> PairTradeType.NORMAL
@@ -142,12 +128,11 @@ object DataParsingUtils {
 
     fun getTradingPairTradeItem(data: String): List<TradingPairTrade>? {
 
-        //If there is no activity in the channel for 15 seconds,
+        // If there is no activity in the channel for 15 seconds,
         // the WebSocket server will send you a heartbeat message in this format.
         try {
 
             if (checkIfValidData(data)) {
-
 
                 when (getPairTradeType(data)) {
                     PairTradeType.NORMAL -> {
@@ -180,27 +165,21 @@ object DataParsingUtils {
                         }
 
                         return list
-
-
                     }
                     PairTradeType.TRADING_EXECUTION -> {
                         return getTradesExecutionAndUpdate(data)
                     }
                     PairTradeType.TRADING_UPDATE -> {
-                        return  getTradesExecutionAndUpdate(data)
+                        return getTradesExecutionAndUpdate(data)
                     }
                 }
-
-
             }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
         return null
     }
-
 
     private fun getTradesExecutionAndUpdate(data: String): List<TradingPairTrade> {
 
@@ -223,6 +202,12 @@ object DataParsingUtils {
         )
 
         return list
-
     }
+
+    fun getTradingPairSymbol(tradingPair: String) = "t${
+        tradingPair.replace(
+            "/",
+            ""
+        )
+    }"
 }

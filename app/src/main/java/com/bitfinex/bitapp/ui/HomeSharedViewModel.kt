@@ -1,6 +1,5 @@
 package com.bitfinex.bitapp.ui
 
-import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -81,7 +80,6 @@ class HomeSharedViewModel @ViewModelInject constructor(
             emit(NetworkState.Failure(e.localizedMessage))
         }
     }
-
 
     fun getPlatformStatus() = liveData {
 
