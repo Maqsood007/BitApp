@@ -1,8 +1,10 @@
 package com.bitfinex.bitapp.ui.funding.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bitfinex.bitapp.R
 import com.bitfinex.bitapp.databinding.ListItemFundingItemBinding
@@ -15,7 +17,7 @@ class FundingItemListAdapter(private val fundingItems: MutableList<String> = mut
     RecyclerView.Adapter<FundingItemListAdapter.FundingItemViewHolder>() {
 
     companion object {
-        const val TRADING_PAIR = "fundingItem"
+        const val FUNDING_ITEM = "fundingItem"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FundingItemViewHolder {
@@ -56,12 +58,12 @@ class FundingItemListAdapter(private val fundingItems: MutableList<String> = mut
 
             listItemFundingItemBinding.root.setOnClickListener {
 
-//                it.findNavController()
-//                    .navigate(
-//                        R.id.action_navigation_trading_to_pairLiveTickerTradeFragment,
-//                        Bundle().apply {
-//                            putString(TRADING_PAIR, fundingItem)
-//                        })
+                it.findNavController()
+                    .navigate(
+                        R.id.action_navigation_fundingItem_to_fundingLiveTickerTradeFragment,
+                        Bundle().apply {
+                            putString(FUNDING_ITEM, fundingItem)
+                        })
             }
         }
     }

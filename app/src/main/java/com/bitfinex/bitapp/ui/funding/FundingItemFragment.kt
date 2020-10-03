@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.bitfinex.bitapp.R
 import com.bitfinex.bitapp.ui.HomeSharedViewModel
 import com.bitfinex.bitapp.ui.funding.adapter.FundingItemListAdapter
+import com.bitfinex.bitapp.ui.funding.viewmodel.FundingLiveTickerTradeViewModel
 import com.bitfinex.bitapp.ui.tradingPair.TradingPairsListFragment
 import com.bitfinex.bitapp.utils.NetworkState
 import kotlinx.android.synthetic.main.fragment_funding_item.*
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_funding_item.*
 class FundingItemFragment : Fragment(), FundingItemView {
 
     private val homeViewModel by activityViewModels<HomeSharedViewModel>()
-    private val fundingItem by activityViewModels<FundingItemViewModel>()
+    private val fundingItemViewModel by activityViewModels<FundingLiveTickerTradeViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -211,6 +211,10 @@ object DataParsingUtils {
         )
     }"
 
+    fun getFundingSymbol(fundingItem: String) = "f${
+        fundingItem
+    }"
+
     fun getTradingPairTickerRequest(tradingPair: String): String {
 
         return "{ \"event\": \"subscribe\", \"channel\": \"ticker\", \"symbol\": \"${
@@ -222,6 +226,21 @@ object DataParsingUtils {
 
         return "{ \"event\": \"subscribe\", \"channel\": \"trades\", \"symbol\": \"${
             getTradingPairSymbol(tradingPair)
+        }\"}"
+    }
+
+
+    fun getFundingTickerRequest(tradingPair: String): String {
+
+        return "{ \"event\": \"subscribe\", \"channel\": \"ticker\", \"symbol\": \"${
+            getFundingSymbol(tradingPair)
+        }\"}"
+    }
+
+    fun getFundingTradeRequest(tradingPair: String): String {
+
+        return "{ \"event\": \"subscribe\", \"channel\": \"trades\", \"symbol\": \"${
+            getFundingSymbol(tradingPair)
         }\"}"
     }
 }
