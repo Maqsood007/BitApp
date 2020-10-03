@@ -9,17 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bitfinex.bitapp.R
 import com.bitfinex.bitapp.ui.HomeSharedViewModel
+import com.bitfinex.bitapp.ui.tradingPair.adapter.TradingPairsListAdapter
 import com.bitfinex.bitapp.utils.NetworkState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_trading.*
 
 @AndroidEntryPoint
-class TradingFragment : Fragment(), TradingPairView {
+class TradingPairsListFragment : Fragment(), TradingPairView {
 
     private val homeViewModel by activityViewModels<HomeSharedViewModel>()
 
     companion object {
 
-        val TAG = TradingFragment::class.simpleName
+        val TAG = TradingPairsListFragment::class.simpleName
     }
 
     override fun onCreateView(
@@ -31,9 +33,20 @@ class TradingFragment : Fragment(), TradingPairView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        addStateObserver()
+        setupRVAdapter()
+        addSplashObserver()
         retryStateObserver()
         Log.d(TAG, homeViewModel.toString())
+    }
+
+    private fun addSplashObserver() {
+
+        homeViewModel.splashVisibility.observe(viewLifecycleOwner) { visibility ->
+
+            if (!visibility) {
+                addStateObserver()
+            }
+        }
     }
 
     private fun addStateObserver() {
@@ -43,16 +56,33 @@ class TradingFragment : Fragment(), TradingPairView {
             when (it) {
                 is NetworkState.Success -> {
                     hideLoading()
+                    @Suppress("UNCHECKED_CAST")
+                    val tradingPairs = it.data as List<String>
+                    updateData(tradingPairs)
                 }
                 is NetworkState.Failure -> {
                     hideLoading()
-                    showError(it.error as String ?: null)
+                    showError(it.error as String)
                 }
                 is NetworkState.Loading -> {
                     hideError()
                     showLoading()
                 }
             }
+        }
+    }
+
+    private fun setupRVAdapter() {
+        rv_tradingPairs.apply {
+            adapter = TradingPairsListAdapter()
+        }
+    }
+
+    private fun updateData(tradingPairs: List<String>) {
+
+        (rv_tradingPairs.adapter as TradingPairsListAdapter).apply {
+            addTradingPair(tradingPairs)
+            notifyDataSetChanged()
         }
     }
 

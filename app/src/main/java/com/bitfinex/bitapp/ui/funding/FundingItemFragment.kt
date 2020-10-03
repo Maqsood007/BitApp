@@ -9,12 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bitfinex.bitapp.R
 import com.bitfinex.bitapp.ui.HomeSharedViewModel
-import com.bitfinex.bitapp.ui.tradingPair.TradingFragment
+import com.bitfinex.bitapp.ui.tradingPair.TradingPairsListFragment
 import com.bitfinex.bitapp.utils.NetworkState
 
 class FundingItemFragment : Fragment(), FundingItemView {
 
     private val homeViewModel by activityViewModels<HomeSharedViewModel>()
+    private val fundingItem by activityViewModels<FundingItemViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +28,9 @@ class FundingItemFragment : Fragment(), FundingItemView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addStateObserver()
         retryStateObserver()
-        Log.d(TradingFragment.TAG, homeViewModel.toString())
+        Log.d(TradingPairsListFragment.TAG, homeViewModel.toString())
+
+        fundingItem.startListeningPairLiveTicker()
     }
 
     private fun addStateObserver() {
@@ -40,7 +43,7 @@ class FundingItemFragment : Fragment(), FundingItemView {
                 }
                 is NetworkState.Failure -> {
                     hideLoading()
-                    showError(it.error as String ?: null)
+                    showError(it.error as String)
                 }
                 is NetworkState.Loading -> {
                     hideError()

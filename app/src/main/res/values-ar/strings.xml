@@ -7,4 +7,22 @@
     <string name="error">Error</string>
     <string name="generic_error">We have received an error. Please try again.</string>
     <string name="retry"><u>RETRY</u></string>
+    <string name="doller_symbol">$</string>
+    <string name="btc_usd">BTC/USD</string>
+    <string name="vol_usd">25,492,425</string>
+    <string name="val_24_hours" >1.55%</string>
+    <string name="last_val">10,906</string>
+    <string name="dash">-</string>
+    <string name="name">NAME</string>
+    <string name="last">LAST</string>
+    <string name="_24H">24H</string>
+    <string name="vol_usd_header">VOL USD</string>
+    <string name="connected">Connected</string>
+    <string name="platform_not_up">We are sorry, currently system is under maintenance</string>
+    <string name="no_internet_msg">Internet connection is not available. Please check your connection</string>
+    <string name="tickers">TICKERS</string>
+    <string name="trades">TRADES</string>
+    <string name="time">TIME</string>
+    <string name="amount">AMOUNT</string>
+    <string name="price">PRICE</string>
 </resources>
