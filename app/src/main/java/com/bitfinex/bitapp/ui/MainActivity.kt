@@ -10,6 +10,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bitfinex.bitapp.R
 import com.bitfinex.bitapp.databinding.ActivityMainBinding
+import com.bitfinex.bitapp.utils.DataParsingUtils
+import com.bitfinex.bitapp.utils.NetworkState
+import com.bitfinex.bitapp.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -25,6 +28,47 @@ class MainActivity : AppCompatActivity() {
         setupViews(getNavController())
 
         setSupportActionBar(toolbar)
+
+
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            setupSplashObserver()
+        } else {
+            homeViewModel.splashStatusMessage.value = getString(R.string.no_internet_msg)
+            homeViewModel.splashLoadingVisibility.value = false
+        }
+
+    }
+
+    private fun setupSplashObserver() {
+
+
+        homeViewModel.getPlatformStatus().observe(this) {
+
+            when (it) {
+                is NetworkState.Success -> {
+                    val data = it.data as List<String>
+                    if (DataParsingUtils.isPlatformIsUp(data)) {
+                        hideSplash()
+                    } else {
+                        homeViewModel.splashStatusMessage.value =
+                            getString(R.string.platform_not_up)
+                    }
+                    homeViewModel.splashLoadingVisibility.value = false
+                }
+                is NetworkState.Failure -> {
+                    homeViewModel.splashStatusMessage.value = it.error as String
+                    homeViewModel.splashLoadingVisibility.value = false
+                }
+                is NetworkState.Loading -> {
+                    homeViewModel.splashLoadingVisibility.value = true
+                }
+            }
+        }
+    }
+
+
+    private fun hideSplash() {
+        homeViewModel.splashVisibility.value = false
     }
 
     private fun setLayout() {

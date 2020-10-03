@@ -25,6 +25,10 @@ android {
         dataBinding true
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     buildTypes {
         release {
             buildConfigField "String", "BASE_URL", "\"https://api-pub.bitfinex.com/v2/\""
@@ -69,6 +73,7 @@ dependencies {
 
     // Hilt dependency Injection
     implementation hilt_di.hilt
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt hilt_di.hilt_kapt
 
     //ViewModel Injection with Hilt

@@ -13,10 +13,16 @@ object CurrencyUtils {
 
         if (!CURRENCY_SYMBOLS.containsKey(currencyCode)) {
 
-            val locale = Locale("en", currencyCode)
-            val currency: Currency = Currency.getInstance(currencyCode)
-            val symbols = currency.getSymbol(locale)
-            CURRENCY_SYMBOLS[currencyCode] = symbols
+            try {
+                val locale = Locale("en", currencyCode)
+                val currency: Currency = Currency.getInstance(currencyCode)
+                val symbols = currency.getSymbol(locale)
+                CURRENCY_SYMBOLS[currencyCode] = symbols
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
+
+
         }
 
         return CURRENCY_SYMBOLS[currencyCode]!!

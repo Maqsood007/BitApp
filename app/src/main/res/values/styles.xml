@@ -12,6 +12,7 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
         <item name="materialButtonStyle">@style/Widget.BitApp.Button</item>
         <item name="textAppearanceButton">@style/Widget.BitApp.Button.TextAppearance</item>
+
     </style>
 
 
@@ -24,7 +25,7 @@
     </style>
 
 
-    <!--AirArabia BitApp default styles-->
+    <!--BitApp default styles-->
     <style name="Widget.BitApp.Button" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/btn_text_color</item>
         <item name="backgroundTint">@color/btn_background</item>
