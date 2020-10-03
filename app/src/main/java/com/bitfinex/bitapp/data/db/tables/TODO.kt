@@ -8,7 +8,7 @@ import com.bitfinex.bitapp.data.db.TimestampConverter
 import java.util.*
 
 @Entity
-data class Steps(
+data class TODO(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
@@ -17,5 +17,5 @@ data class Steps(
     @TypeConverters(TimestampConverter::class)
     val dateTime: Date?,
 
-    @ColumnInfo(name = "steps") val steps: Long?
+    @ColumnInfo(name = "todo") val steps: Long?
 )
