@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bitfinex.bitapp.R
 import com.bitfinex.bitapp.ui.HomeSharedViewModel
+import com.bitfinex.bitapp.ui.funding.adapter.FundingItemListAdapter
 import com.bitfinex.bitapp.ui.tradingPair.TradingPairsListFragment
 import com.bitfinex.bitapp.utils.NetworkState
+import kotlinx.android.synthetic.main.fragment_funding_item.*
 
 class FundingItemFragment : Fragment(), FundingItemView {
 
@@ -26,11 +28,10 @@ class FundingItemFragment : Fragment(), FundingItemView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setupRVAdapter()
         addStateObserver()
         retryStateObserver()
         Log.d(TradingPairsListFragment.TAG, homeViewModel.toString())
-
-        fundingItem.startListeningPairLiveTicker()
     }
 
     private fun addStateObserver() {
@@ -40,6 +41,8 @@ class FundingItemFragment : Fragment(), FundingItemView {
             when (it) {
                 is NetworkState.Success -> {
                     hideLoading()
+                    @Suppress("UNCHECKED_CAST")
+                    updateData(it.data as List<String>)
                 }
                 is NetworkState.Failure -> {
                     hideLoading()
@@ -59,6 +62,20 @@ class FundingItemFragment : Fragment(), FundingItemView {
             if (retry) {
                 addStateObserver()
             }
+        }
+    }
+
+    private fun setupRVAdapter() {
+        rv_fundingItems.apply {
+            adapter = FundingItemListAdapter()
+        }
+    }
+
+    private fun updateData(fundingItems: List<String>) {
+
+        (rv_fundingItems.adapter as FundingItemListAdapter).apply {
+            addFundingItems(fundingItems)
+            notifyDataSetChanged()
         }
     }
 

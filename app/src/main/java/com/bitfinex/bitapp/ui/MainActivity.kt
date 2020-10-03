@@ -25,9 +25,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setLayout()
 
+        setSupportActionBar(toolbar)
+
         setupViews(getNavController())
 
-        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (NetworkUtils.isNetworkAvailable(this)) {
             setupSplashObserver()
@@ -93,8 +95,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_trading, R.id.navigation_fundingItem
             )
         )
-
         toolbar.setupWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return getNavController().navigateUp() || super.onSupportNavigateUp()
     }
 }
