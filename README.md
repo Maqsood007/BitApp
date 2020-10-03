@@ -22,5 +22,6 @@ A MVVM approach to have the separation of concerns &amp; batter testibility.
    - Kotlin Coroutines & Coroutine+live data builders
    - Encrypted Shared Preferences.
    - Hilt for dependency Injection.
+   - Spotless for linting. A wrapper to ktlint.
    - Junit4 + Mockito for unit testing.
 
