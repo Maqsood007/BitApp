@@ -1,5 +1,6 @@
 package com.bitfinex.bitapp.ui
 
+import android.app.PendingIntent.getActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -25,11 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setLayout()
 
-        setSupportActionBar(toolbar)
-
-        setupViews(getNavController())
-
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+       setupToolbar()
 
         if (NetworkUtils.isNetworkAvailable(this)) {
             setupSplashObserver()
@@ -37,6 +34,13 @@ class MainActivity : AppCompatActivity() {
             homeViewModel.splashStatusMessage.value = getString(R.string.no_internet_msg)
             homeViewModel.splashLoadingVisibility.value = false
         }
+    }
+
+    private fun setupToolbar() {
+
+        setSupportActionBar(toolbar)
+        setupViews(getNavController())
+        supportActionBar!!.title = getString(R.string.title_trading_pair)
     }
 
     private fun setupSplashObserver() {

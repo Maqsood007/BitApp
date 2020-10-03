@@ -19,7 +19,11 @@
         android:id="@+id/navigation_fundingItem"
         android:name="com.bitfinex.bitapp.ui.funding.FundingItemFragment"
         android:label="@string/title_funding_item"
-        tools:layout="@layout/fragment_funding_item" />
+        tools:layout="@layout/fragment_funding_item" >
+        <action
+            android:id="@+id/action_navigation_fundingItem_to_fundingLiveTickerTradeFragment"
+            app:destination="@id/fundingLiveTickerTradeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/pairLiveTickerTradeFragment"
         android:name="com.bitfinex.bitapp.ui.tradingPair.PairLiveTickerTradeFragment"
@@ -30,5 +34,16 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="Trading Pair" />
+    </fragment>
+    <fragment
+        android:id="@+id/fundingLiveTickerTradeFragment"
+        android:name="com.bitfinex.bitapp.ui.funding.FundingLiveTickerTradeFragment"
+        android:label="{fundingItem}" >
+
+        <argument
+            android:name="fundingItem"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="Funding Item" />
     </fragment>
 </navigation>
