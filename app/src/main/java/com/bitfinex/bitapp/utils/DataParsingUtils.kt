@@ -113,9 +113,9 @@ object DataParsingUtils {
                 val type: Type = object : TypeToken<JsonArray>() {}.type
                 val response = Gson().fromJson<JsonArray>(data, type)
 
-                val data = response.get(1)
+                val dataParsed = response.get(1)
                 val typeListBigDecimal: Type = object : TypeToken<List<BigDecimal>>() {}.type
-                val dataList = Gson().fromJson<List<BigDecimal>>(data, typeListBigDecimal)
+                val dataList = Gson().fromJson<List<BigDecimal>>(dataParsed, typeListBigDecimal)
 
                 return TradingPairTicker(
                     pairName,
@@ -155,10 +155,10 @@ object DataParsingUtils {
                         val type: Type = object : TypeToken<JsonArray>() {}.type
                         val response = Gson().fromJson<JsonArray>(data, type)
 
-                        val data = response.get(1)
+                        val dataParsed = response.get(1)
                         val typeListJsonArray: Type = object : TypeToken<List<JsonArray>>() {}.type
                         val dataJsonArrayList =
-                            Gson().fromJson<List<JsonArray>>(data, typeListJsonArray)
+                            Gson().fromJson<List<JsonArray>>(dataParsed, typeListJsonArray)
 
                         val list = mutableListOf<TradingPairTrade>()
 
@@ -207,10 +207,10 @@ object DataParsingUtils {
         val type: Type = object : TypeToken<JsonArray>() {}.type
         val response = Gson().fromJson<JsonArray>(data, type)
 
-        val data = response.get(2)
+        val dataParsed = response.get(2)
         val typeListJsonArray: Type = object : TypeToken<List<BigDecimal>>() {}.type
         val dataJsonArrayList =
-            Gson().fromJson<List<BigDecimal>>(data, typeListJsonArray)
+            Gson().fromJson<List<BigDecimal>>(dataParsed, typeListJsonArray)
 
         val list = mutableListOf<TradingPairTrade>()
 

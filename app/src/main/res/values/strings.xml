@@ -19,8 +19,6 @@
     <string name="connected">Connected</string>
     <string name="platform_not_up">We are sorry, currently system is under maintenance</string>
     <string name="no_internet_msg">Internet connection is not available. Please check your connection.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tickers">TICKERS</string>
     <string name="trades">TRADES</string>
     <string name="time">TIME</string>

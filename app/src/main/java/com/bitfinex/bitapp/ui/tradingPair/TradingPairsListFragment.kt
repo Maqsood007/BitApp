@@ -57,12 +57,13 @@ class TradingPairsListFragment : Fragment(), TradingPairView {
             when (it) {
                 is NetworkState.Success -> {
                     hideLoading()
+                    @Suppress("UNCHECKED_CAST")
                     val tradingPairs = it.data as List<String>
                     updateData(tradingPairs)
                 }
                 is NetworkState.Failure -> {
                     hideLoading()
-                    showError(it.error as String ?: null)
+                    showError(it.error as String)
                 }
                 is NetworkState.Loading -> {
                     hideError()

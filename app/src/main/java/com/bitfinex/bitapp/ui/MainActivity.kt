@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
             when (it) {
                 is NetworkState.Success -> {
+                    @Suppress("UNCHECKED_CAST")
                     val data = it.data as List<String>
                     if (DataParsingUtils.isPlatformIsUp(data)) {
                         hideSplash()

@@ -43,7 +43,7 @@ class FundingItemFragment : Fragment(), FundingItemView {
                 }
                 is NetworkState.Failure -> {
                     hideLoading()
-                    showError(it.error as String ?: null)
+                    showError(it.error as String)
                 }
                 is NetworkState.Loading -> {
                     hideError()
