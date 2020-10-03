@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.bitfinex.bitapp.ui.tradingPair.viewmodel.TradingPairListItemViewModel" />
+            type="com.bitfinex.bitapp.ui.funding.viewmodel.FundingItemListItemViewModel" />
 
     </data>
 
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_tradingPairName"
+            android:id="@+id/tv_fundingItemName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{viewModel.tradingPairName}"

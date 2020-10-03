@@ -6,14 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bitfinex.bitapp.data.models.TradingPairTicker
 import com.bitfinex.bitapp.data.models.TradingPairTrade
+import com.bitfinex.bitapp.utils.BitAppWebSocketListener
 import com.bitfinex.bitapp.utils.DataParsingUtils
 import com.bitfinex.bitapp.utils.DataParsingUtils.checkIfValidData
 import com.bitfinex.bitapp.utils.DataParsingUtils.extractReceivedDataChannelID
-import com.bitfinex.bitapp.utils.DataParsingUtils.getTradingPairSymbol
 import com.bitfinex.bitapp.utils.DataParsingUtils.getTradingPairTickerItem
+import com.bitfinex.bitapp.utils.DataParsingUtils.getTradingPairTickerRequest
 import com.bitfinex.bitapp.utils.DataParsingUtils.getTradingPairTradeItem
+import com.bitfinex.bitapp.utils.DataParsingUtils.getTradingPairTradeRequest
 import com.bitfinex.bitapp.utils.DataParsingUtils.isTickerChannel
 import com.bitfinex.bitapp.utils.DataParsingUtils.parseWSSubscriptionEvent
+import com.bitfinex.bitapp.utils.WebSocketUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.*
@@ -21,7 +24,8 @@ import okhttp3.*
 /**
  * Created by Muhammad Maqsood on 02/10/2020.
  */
-class PairLiveTickerTradeViewModel @ViewModelInject constructor() : ViewModel() {
+class PairLiveTickerTradeViewModel @ViewModelInject constructor() : ViewModel(),
+    BitAppWebSocketListener {
 
     var tradingPair: String? = null
 
@@ -33,53 +37,40 @@ class PairLiveTickerTradeViewModel @ViewModelInject constructor() : ViewModel() 
 
     lateinit var webSocket: WebSocket
 
-    fun startListeningPairLiveTicker() {
+    override fun onOpen(response: Response) {}
 
-        val request = Request.Builder().url("wss://api-pub.bitfinex.com/ws/2").build()
+    override fun onMessage(text: String) {
 
-        webSocket = OkHttpClient().newWebSocket(request, object : WebSocketListener() {
+        if (text.contains("\"event\":\"subscribed\"")) {
+            assignChannelsID(data = text)
+        } else {
 
-            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                println("onFailure")
-            }
+            if (checkIfValidData(text)) {
 
-            override fun onMessage(webSocket: WebSocket, text: String) {
-
-                if (text.contains("\"event\":\"subscribed\"")) {
-                    assignChannelsID(data = text)
-                } else {
-
-                    if (checkIfValidData(text)) {
-
-                        when (extractReceivedDataChannelID(text, tickerStreamChannelID)) {
-                            DataParsingUtils.ChannelType.TICKER -> {
-                                updatePairTicker(text)
-                            }
-                            DataParsingUtils.ChannelType.TRADES -> {
-                                updatePairTrade(text)
-                            }
-                        }
+                when (extractReceivedDataChannelID(text, tickerStreamChannelID)) {
+                    DataParsingUtils.ChannelType.TICKER -> {
+                        updatePairTicker(text)
+                    }
+                    DataParsingUtils.ChannelType.TRADES -> {
+                        updatePairTrade(text)
                     }
                 }
-
-                // update(text)
-                println("onMessage: $text")
             }
+        }
+    }
 
-            override fun onOpen(webSocket: WebSocket, response: Response) {
-                println("onOpen")
-            }
-        })
+    override fun onFailure(t: Throwable) {}
+
+    fun startListeningPairLiveTicker() {
+
+        WebSocketUtils.startListening(this)
+        webSocket = WebSocketUtils.getWebSocket()
 
         webSocket.send(
-            "{ \"event\": \"subscribe\", \"channel\": \"ticker\", \"symbol\": \"${
-                getTradingPairSymbol(tradingPair!!)
-            }\"}"
+            getTradingPairTickerRequest(tradingPair!!)
         )
         webSocket.send(
-            "{ \"event\": \"subscribe\", \"channel\": \"trades\", \"symbol\": \"${
-                getTradingPairSymbol(tradingPair!!)
-            }\"}"
+            getTradingPairTradeRequest(tradingPair!!)
         )
     }
 
@@ -115,6 +106,7 @@ class PairLiveTickerTradeViewModel @ViewModelInject constructor() : ViewModel() 
 
     override fun onCleared() {
         super.onCleared()
+        WebSocketUtils.clearListener()
         if (this::webSocket.isInitialized) {
             webSocket.close(1000, "Its Cleared")
         }

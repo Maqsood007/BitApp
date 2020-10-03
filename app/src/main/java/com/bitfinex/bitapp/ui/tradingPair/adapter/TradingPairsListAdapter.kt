@@ -44,8 +44,8 @@ class TradingPairsListAdapter(private val tradingPairs: MutableList<String> = mu
         tradingPairs.clear()
     }
 
-    fun addTradingPair(products: List<String>) {
-        this.tradingPairs.addAll(products)
+    fun addTradingPair(pair: List<String>) {
+        this.tradingPairs.addAll(pair)
     }
 
     class TradingPairItemViewHolder(private val listItemBrandingPairBinding: ListItemTrandingPairBinding) :

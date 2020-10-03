@@ -87,16 +87,12 @@ class HomeSharedViewModel @ViewModelInject constructor(
 
         try {
 
-            emit(
-                NetworkState.Success(
-                    data = if (fundingItems.isEmpty()) {
+            val response: JsonElement = bitAppAPI.getPlatformStatus()
+            val type: Type = object : TypeToken<List<String>>() {}.type
+            val statusResponse = Gson().fromJson<List<String>>(response, type)
 
-                        val response: JsonElement = bitAppAPI.getPlatformStatus()
-                        val type: Type = object : TypeToken<List<String>>() {}.type
-                        fundingItems.addAll(Gson().fromJson<List<String>>(response, type))
-                        fundingItems // Return the populated data list.
-                    } else fundingItems
-                )
+            emit(
+                NetworkState.Success(statusResponse)
             )
         } catch (e: Exception) {
             emit(NetworkState.Failure(e.localizedMessage))

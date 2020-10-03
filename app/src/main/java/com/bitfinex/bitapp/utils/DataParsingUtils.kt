@@ -210,4 +210,18 @@ object DataParsingUtils {
             ""
         )
     }"
+
+    fun getTradingPairTickerRequest(tradingPair: String): String {
+
+        return "{ \"event\": \"subscribe\", \"channel\": \"ticker\", \"symbol\": \"${
+            getTradingPairSymbol(tradingPair)
+        }\"}"
+    }
+
+    fun getTradingPairTradeRequest(tradingPair: String): String {
+
+        return "{ \"event\": \"subscribe\", \"channel\": \"trades\", \"symbol\": \"${
+            getTradingPairSymbol(tradingPair)
+        }\"}"
+    }
 }
