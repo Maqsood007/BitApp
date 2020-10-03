@@ -1,6 +1,5 @@
 package com.bitfinex.bitapp.ui
 
-import android.app.PendingIntent.getActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -25,8 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLayout()
-
-       setupToolbar()
+        setupToolbar()
 
         if (NetworkUtils.isNetworkAvailable(this)) {
             setupSplashObserver()

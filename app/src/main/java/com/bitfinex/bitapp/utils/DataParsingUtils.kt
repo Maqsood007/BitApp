@@ -229,7 +229,6 @@ object DataParsingUtils {
         }\"}"
     }
 
-
     fun getFundingTickerRequest(tradingPair: String): String {
 
         return "{ \"event\": \"subscribe\", \"channel\": \"ticker\", \"symbol\": \"${
